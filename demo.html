@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+	</head>
+ <body>
+ <style>
+ .center{
+	text-align:center;
+	background:white;
+	min-width:100px;
+	height:100px;
+ }
+ .popup {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #dbf1f3;
+    width: 200px;
+	height:200px;
+    padding: 25px;
+    transition: 0.5s all;
+}
+.popup.active {
+    transform: translate(-50%, -50%) scale(1);
+    transition: 0.5s all;
+}
+.close-popup {
+    position: fixed;
+    top: 10px;
+    right:10px;
+    cursor: pointer;
+}
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s all;
+}
+
+.wrapper.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.5s all;
+}
+.s2{
+color:white;
+background:#b9b9b9;
+}
+.first{
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+ </style>
+ <script>
+ 	wrapper = document.querySelector('.wrapper');
+ function openpopup(item){
+	text = item.innerHTML;
+	wrapper = document.querySelector('.wrapper');
+	wrapper.classList.add('active');
+	popup = document.querySelector('.popup');
+	popup.classList.add('active');
+	popup_text= document.querySelector('#popup_text');
+	popup_text.innerHTML = "Блок "+text;
+ }
+  function closepopup(){
+	wrapper = document.querySelector('.wrapper');
+	wrapper.classList.remove('active');
+ }
+document.addEventListener('click', (e) => {
+    if(e.target === wrapper) {
+        wrapper.classList.remove('active');
+        popup.classList.remove('active');
+    }
+});
+function change(){
+  even = document.querySelectorAll('.even')
+  mycheck = document.querySelector('#mycheck');
+if ( mycheck.checked ) {
+	  for(var i = 0; i < even.length; i++) {
+		even[i].classList.add('s2');
+	  }
+    } else {
+	  for(var i = 0; i < even.length; i++) {
+		even[i].classList.remove('s2');
+	  }
+    }
+  
+
+}
+function add() {
+  //var table = document.getElementById("mytable");
+  //var row = table.insertRow(0);
+  //var cell1 = row.insertCell(0);
+  //var cell2 = row.insertCell(1);
+  //cell1.innerHTML = "NEW CELL1";
+  //cell2.innerHTML = "NEW CELL2";
+  
+   var table = document.getElementsByTagName("table")[0];
+   totalRowCount = table.rows.length;
+   
+   var tr = document.createElement("tr"), td;
+    /*
+  for(let i = 1; i <= 4; i++){
+    td = document.createElement("td");
+    td.innerHTML = i;
+    tr.appendChild(td);
+  } 
+  */
+	n1=(totalRowCount*4)+1;
+	n2=(totalRowCount*4)+2;
+	n3=(totalRowCount*4)+3;
+	n4=(totalRowCount*4)+4;
+	
+	c1=n1*100;
+	c2=n2*100;
+	c3=n3*100;
+	c4=n4*100;
+	
+	hex1 = c1.toString(16);
+	hex2 = c2.toString(16);
+	hex3 = c3.toString(16);
+	hex4 = c4.toString(16);
+	
+	str="<td class='center noteven' onclick='openpopup(this)' style='color:#"+hex1+"'>"+n1+"</td><td class='center even' onclick='openpopup(this)' style='color:#"+hex2+"'>"+n2+"</td><td class='center noteven' onclick='openpopup(this)' style='color:#"+hex3+"'>"+n3+"</td><td class='center even' onclick='openpopup(this)' style='color:#"+hex4+"'>"+n4+"</td>";
+	tr.innerHTML=str;
+	
+    table.appendChild(tr);    
+
+}
+ </script>
+ <table border="1" id="mytable">
+ <tr>
+	<td class="center noteven" onclick="openpopup(this)">1</td>
+	<td class="center even" onclick="openpopup(this)">2</td>
+	<td class="center noteven" onclick="openpopup(this)">3</td>
+	<td class="center even" onclick="openpopup(this)">4</td>
+</tr><br>
+ </table>
+ <input id="mycheck" type="checkbox" onclick="change()"> checkbox <br>
+ <input type="button" onclick="add()" value="Добавить"><br>
+ <div id="wrapper" class="wrapper">
+ <div id="popup" class="popup">
+	<div class="first">
+	   <svg onclick="closepopup()" class="close-popup" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2982ff" d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+		<div id="popup_text" style="text-align:center;display: table-cell;vertical-align: middle;">
+		</div>
+	</div>
+	 </div>
+ </div>
+</body>
+</html>
